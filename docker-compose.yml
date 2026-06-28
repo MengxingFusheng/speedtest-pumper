@@ -1,0 +1,10 @@
+services:
+  speedtest-pumper:
+    build:
+      context: .
+      args:
+        PYTHON_IMAGE: ${PYTHON_IMAGE:-public.ecr.aws/docker/library/python:3.12-slim}
+    container_name: speedtest-pumper
+    restart: unless-stopped
+    env_file:
+      - .env

@@ -1,0 +1,15 @@
+services:
+  speedtest-pumper:
+    networks:
+      speedtest_lan:
+        ipv4_address: ${CONTAINER_IPV4_ADDRESS}
+
+networks:
+  speedtest_lan:
+    driver: macvlan
+    driver_opts:
+      parent: ${LAN_PARENT_INTERFACE}
+    ipam:
+      config:
+        - subnet: ${LAN_SUBNET_CIDR}
+          gateway: ${LAN_GATEWAY}
