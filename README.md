@@ -4,6 +4,51 @@
 
 请只对你有权持续访问的测速或下载源使用。公共测速站不一定允许长时间循环下载，建议先限速并设置运行时间窗口。
 
+## 爱快 Docker / Compose 部署
+
+爱快的 Docker 页面建议直接使用预构建镜像，避免在路由器上 `git clone`、`apt-get` 或现场构建镜像。
+
+项目名称可以填写 `download` 或 `speedtest-pumper`，Compose 文件粘贴：
+
+```yaml
+services:
+  speedtest-pumper:
+    image: ghcr.io/mengxingfusheng/speedtest-pumper:latest
+    container_name: speedtest-pumper
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      LINE_COUNT: "2"
+      CONNECTIONS_PER_LINE: "8"
+      RATE_LIMIT_ENABLED: "true"
+      RATE_LIMIT_MBPS: "900"
+      START_TIME: "00:00"
+      END_TIME: "18:00"
+      AUTO_SELECT_SPEEDTEST: "true"
+      SPEEDTEST_COUNTRY: CN
+      SPEEDTEST_SEARCH: China
+      SPEEDTEST_SERVER_LIMIT: "20"
+      SPEEDTEST_DOWNLOAD_SIZE: "4000"
+      SPEEDTEST_REFRESH_SECONDS: "3600"
+      PUBLIC_IP_URL: https://api64.ipify.org
+      DOWNLOAD_URLS: ""
+      CHUNK_SIZE: "262144"
+      REQUEST_TIMEOUT_SECONDS: "30"
+      SCHEDULE_POLL_SECONDS: "30"
+      STATS_INTERVAL_SECONDS: "60"
+      LOG_LEVEL: INFO
+```
+
+这份配置表示：2 条外线、每条 8 个连接、总限速 900 Mbps、每天 00:00 到 18:00 运行。
+
+如果拉取镜像时报 `unauthorized` 或 `pull access denied`，请到 GitHub 仓库右侧 Packages 里的 `speedtest-pumper` 包设置中确认可见性为 Public。
+
+仓库会通过 GitHub Actions 自动发布镜像：
+
+- `ghcr.io/mengxingfusheng/speedtest-pumper:latest`：`main` 分支最新版本
+- `ghcr.io/mengxingfusheng/speedtest-pumper:sha-<commit>`：指定提交版本
+- `ghcr.io/mengxingfusheng/speedtest-pumper:<tag>`：发布 Git tag 时生成
+
 ## 快速部署
 
 从 GitHub 一键安装并进入交互部署：
