@@ -1,0 +1,26 @@
+services:
+  speedtest-pumper:
+    image: ghcr.io/mengxingfusheng/speedtest-pumper:latest
+    container_name: speedtest-pumper
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      LINE_COUNT: "2"
+      CONNECTIONS_PER_LINE: "8"
+      RATE_LIMIT_ENABLED: "true"
+      RATE_LIMIT_MBPS: "900"
+      START_TIME: "00:00"
+      END_TIME: "18:00"
+      AUTO_SELECT_SPEEDTEST: "true"
+      SPEEDTEST_COUNTRY: CN
+      SPEEDTEST_SEARCH: China
+      SPEEDTEST_SERVER_LIMIT: "20"
+      SPEEDTEST_DOWNLOAD_SIZE: "4000"
+      SPEEDTEST_REFRESH_SECONDS: "3600"
+      PUBLIC_IP_URL: https://api64.ipify.org
+      DOWNLOAD_URLS: ""
+      CHUNK_SIZE: "262144"
+      REQUEST_TIMEOUT_SECONDS: "30"
+      SCHEDULE_POLL_SECONDS: "30"
+      STATS_INTERVAL_SECONDS: "60"
+      LOG_LEVEL: INFO
